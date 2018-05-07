@@ -11,4 +11,6 @@ app.use(morgan('combined'));
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(require('./controllers'));
 
-app.listen(port, (
+app.listen(port, () => {
+  logger.verbose(`Running server on port ${port}`);
+});

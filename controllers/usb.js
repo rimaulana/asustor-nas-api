@@ -57,4 +57,4 @@ router.get('/', getUsb);
 //   }
 // });
 
-module.exports = route
+module.exports = router;
