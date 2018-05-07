@@ -18,11 +18,12 @@
     },
     "homepage": "https://github.com/rimaulana/asustor-nas-api#readme",
     "dependencies": {
-        "@rimaulana/asustor-node": "^0.1.4",
+        "@rimaulana/asustor-node": "^1.0.0",
+        "body-parser": "^1.18.2",
         "express": "^4.16.2",
         "fs-extra": "^4.0.2",
         "mkdirp": "^0.5.1",
-        "moment": "^2.19.1",
+        "morgan": "^1.9.0",
         "winston": "^2.4.0",
         "winston-daily-rotate-file": "^1.7.2",
         "winston-slack-transport": "^2.0.0"

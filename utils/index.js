@@ -1,12 +1,30 @@
+const logger = require('./logger');
+
+const cleanIPAddress = (ipAddress) => {
+  const regex = new RegExp('\\:\\:.*\\:');
+  if (regex.test(ipAddress)) {
+    return ipAddress.replace(regex, '');
+  }
+  return ipAddress;
+};
+
+const cleanSourcePath = (source) => {
+  if (source.endsWith('/')) {
+    return source.slice(0, -1);
+  }
+  return source;
+};
+
+const getFileName = source => source.match(/(?:.*\/)?(.*)/)[1];
+
+const genericReply = (res, error, data, code = 500) => {
+  if (error) {
+    res.status(code).json({ reason: error.message });
+  } else {
+    res.json(data);
+  }
+};
+
 module.exports = {
-    logger: require("./logger"),
-    cleanIPAddress: function(ipAddress) {
-        return /\:\:.*\:/.test(ipAddress) ? ipAddress.replace(/\:\:.*\:/, "") : ipAddress;
-    },
-    cleanSourcePath: function(source) {
-        return source.endsWith("/") ? source.slice(0, -1) : source;
-    },
-    getFileName: function(source) {
-        return source.match(/(?:.*\/)?(.*)/)[1];
-    }
+  logger, cleanIPAddress, cleanSourcePath, getFileName, genericReply,
 };

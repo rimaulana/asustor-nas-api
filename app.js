@@ -1,13 +1,14 @@
-var express = require("express"),
-    app = express(),
-    bodyParser = require("body-parser"),
-    port = process.env.PORT || 3000;
-var logger = require("./utils/logger");
+const express = require('express');
+const logger = require('./utils/logger');
+const bodyParser = require('body-parser');
+const morgan = require('morgan');
+
+const app = express();
+const port = process.env.PORT || 3000;
 
 app.use(bodyParser.json());
+app.use(morgan('combined'));
 app.use(bodyParser.urlencoded({ extended: true }));
-app.use(require("./controllers"));
+app.use(require('./controllers'));
 
-app.listen(port, function() {
-    logger.verbose("Running server on port " + port);
-});
+app.listen(port, (

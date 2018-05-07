@@ -1,38 +1,31 @@
-var express = require("express"),
-    router = express.Router(),
-    logger = require("../utils/logger"),
-    info = require("../package.json");
+const express = require('express');
+const utils = require('../utils');
+const info = require('../package.json');
 
-router.get("/", function(req, res) {
-    var response = {
-        process: "Health check",
-        version: info.version,
-        ok: true
-    };
-    logger.verbose(JSON.stringify(response));
-    // return JSON HTTP response to API caller
-    res.json(response);
-});
+const router = express.Router();
 
-router.post("/", function(req, res) {
-    var response = {
-        process: "Health check",
-        version: info.version,
-        ok: true
-    };
-    logger.verbose(JSON.stringify(response));
-    // return JSON HTTP response to API caller
-    res.json(response);
-});
+const healthCheck = (req, res) => {
+  const response = {
+    process: 'Health check',
+    version: info.version,
+    ok: true,
+  };
+  utils.genericReply(res, null, response);
+};
 
-router.use(require("../middlewares/auth"));
+const notFound = (req, res) => {
+  utils.genericReply(res, new Error('resource not found'), null, 404);
+};
 
-router.use("/file", require("./file"));
-router.use("/folder", require("./folder"));
-router.use("/usb", require("./usb"));
+router.get('/', healthCheck);
+router.post('/', healthCheck);
 
-router.use(function(req, res) {
-    res.status(404).json({ reason: "not found" });
-});
+router.use(require('../middlewares/auth'));
+
+router.use('/file', require('./file'));
+router.use('/folder', require('./folder'));
+router.use('/usb', require('./usb'));
+
+router.use(notFound);
 
 module.exports = router;
