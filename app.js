@@ -2,9 +2,10 @@ const express = require('express');
 const logger = require('./utils/logger');
 const bodyParser = require('body-parser');
 const morgan = require('morgan');
+const config = require('./config');
 
 const app = express();
-const port = process.env.PORT || 3000;
+const port = config.server_port || 3000;
 
 app.use(bodyParser.json());
 app.use(morgan('combined'));
