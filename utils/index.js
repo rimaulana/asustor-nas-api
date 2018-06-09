@@ -1,4 +1,5 @@
 const logger = require('./logger');
+const mkdirp = require('mkdirp');
 
 const cleanIPAddress = (ipAddress) => {
   const regex = new RegExp('\\:\\:.*\\:');
@@ -26,5 +27,5 @@ const genericReply = (res, error, data, code = 500) => {
 };
 
 module.exports = {
-  logger, cleanIPAddress, cleanSourcePath, getFileName, genericReply,
+  logger, cleanIPAddress, cleanSourcePath, getFileName, genericReply, mkdirp,
 };
