@@ -4,8 +4,16 @@
     "description": "Expose ASUSTOR NAS functionality via REST API",
     "main": "app.js",
     "scripts": {
-        "test": "echo \"Error: no test specified\" && exit 1",
-        "start": "node app.js"
+        "test": "node ./node_modules/mocha/bin/mocha --reporter=spec tests/*.js",
+        "cover": "node ./node_modules/nyc/bin/nyc.js --reporter=text-summary ./node_modules/mocha/bin/mocha --reporter=spec tests/*.js && npm run report",
+        "report": "node ./node_modules/nyc/bin/nyc.js report --reporter=lcov",
+        "server": "node app.js"
+    },
+    "nyc": {
+        "exclude": [
+            "tests/*.js",
+            "utils/logger.js"
+        ]
     },
     "repository": {
         "type": "git",
@@ -27,5 +35,12 @@
         "winston": "^2.4.0",
         "winston-daily-rotate-file": "^1.7.2",
         "winston-slack-transport": "^2.0.0"
+    },
+    "devDependencies": {
+        "chai": "^4.1.2",
+        "mocha": "^5.2.0",
+        "nyc": "^12.0.2",
+        "sinon": "^5.1.0",
+        "supertest": "^3.1.0"
     }
 }
