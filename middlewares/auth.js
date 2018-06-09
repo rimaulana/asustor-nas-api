@@ -5,7 +5,7 @@ const config = require('../config');
 const router = express.Router();
 
 router.use((req, res, next) => {
-  const token = req.headers['x-access-token'] || req.query.token || req.body.token;
+  const token = req.headers['x-access-token'] || req.query.token || req.body.token || null;
   if (token) {
     if (config.api_keys.indexOf(token) !== -1) {
       next();
