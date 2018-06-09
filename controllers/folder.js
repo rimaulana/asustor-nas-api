@@ -1,5 +1,4 @@
 const express = require('express');
-const mkdirp = require('mkdirp');
 const utils = require('../utils');
 const asustor = require('@rimaulana/asustor-node');
 
@@ -9,7 +8,7 @@ const createFolder = (req, res) => {
   let folderName = req.params.foldername || req.body.foldername || '';
   if (folderName !== '') {
     folderName = utils.cleanSourcePath(folderName);
-    mkdirp(folderName, (error) => {
+    utils.mkdirp(folderName, (error) => {
       const data = { status: `folder ${folderName} created` };
       utils.genericReply(res, error, data);
     });
