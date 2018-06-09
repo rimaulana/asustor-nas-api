@@ -43,7 +43,7 @@ router.post('/:id', (req, res) => {
       .then((data) => {
         fse.copy(data.src, data.dst, (err) => {
           if (err) {
-            utils.logger.error(err.message);
+            utils.logger.error(`error in copying ${data.src} to ${data.dst}, error message: ${err.message}`);
           } else {
             utils.logger.info(`copied ${data.src} to ${data.dst}`);
           }
