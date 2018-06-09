@@ -20,11 +20,9 @@ const notFound = (req, res) => {
 router.get('/', healthCheck);
 router.post('/', healthCheck);
 
-router.use(require('../middlewares/auth'));
-
-router.use('/file', require('./file'));
-router.use('/folder', require('./folder'));
-router.use('/usb', require('./usb'));
+router.use('/file', require('../middlewares/auth'), require('./file'));
+router.use('/folder', require('../middlewares/auth'), require('./folder'));
+router.use('/usb', require('../middlewares/auth'), require('./usb'));
 
 router.use(notFound);
 
