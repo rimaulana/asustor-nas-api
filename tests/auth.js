@@ -26,20 +26,14 @@ describe('Test cases for /middlewares/auth.js', () => {
       .get(`/?token=${config.api_keys[0]}`)
       .expect(200, { status: 'ok' }, done);
   });
-  it('Should return 200 OK upon successful authentication using body field', (done) => {
+  it('Should return 401 access token required when token isn\'t set', (done) => {
     request(app)
       .get('/')
-      .send({ token: config.api_keys[0] })
-      .expect(200, { status: 'ok' }, done);
+      .expect(401, { reason: 'access token required' }, done);
   });
-  it('Should return 403 access token required when token isn\'t set', (done) => {
-    request(app)
-      .get('/')
-      .expect(403, { reason: 'access token required' }, done);
-  });
-  it('Should return 403 access token invalid when token isn\'t valid', (done) => {
+  it('Should return 401 access token invalid when token isn\'t valid', (done) => {
     request(app)
       .get('/?token=invalidtoken')
-      .expect(403, { reason: 'access token invalid' }, done);
+      .expect(401, { reason: 'access token invalid' }, done);
   });
 });

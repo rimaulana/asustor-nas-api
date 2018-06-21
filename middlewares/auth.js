@@ -5,17 +5,17 @@ const config = require('../config');
 const router = express.Router();
 
 router.use((req, res, next) => {
-  const token = req.headers['x-access-token'] || req.query.token || req.body.token || null;
+  const token = req.headers['x-access-token'] || req.query.token;
   if (token) {
     if (config.api_keys.indexOf(token) !== -1) {
       next();
     } else {
       utils.logger.warn(`${utils.cleanIPAddress(req.ip)} - called ${req.url} with invalid access key`);
-      res.status(403).json({ reason: 'access token invalid' });
+      res.status(401).json({ reason: 'access token invalid' });
     }
   } else {
     utils.logger.warn(`${utils.cleanIPAddress(req.ip)} - called ${req.url} without access key`);
-    res.status(403).json({ reason: 'access token required' });
+    res.status(401).json({ reason: 'access token required' });
   }
 });
 
