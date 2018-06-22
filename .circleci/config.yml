@@ -1,0 +1,16 @@
+version: 2.0
+jobs:
+  build:
+    docker:
+      - image: circleci/node:carbon
+    steps:
+      - checkout
+      - run:
+          name: Installing dependencies
+          command: npm install --dev
+      - run:
+          name: Running tests
+          command: npm run cover
+      - run:
+          name: Upload test result to codecov
+          command: bash <(curl -s https://codecov.io/bash)
