@@ -10,7 +10,7 @@ jobs:
           command: npm install
       - run:
           name: Create test config
-          command: echo -e '{\t"api_keys": [\n\t\t"1234567"\n\t],\n\t"server_port": 3000\n}' > config.json
+          command: "echo -e '{\t\"api_keys\": [\n\t\t\"1234567\"\n\t],\n\t\"server_port\": 3000\n}' > config.json"
       - run:
           name: Running tests
           command: npm run cover
