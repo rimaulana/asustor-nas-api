@@ -93,7 +93,7 @@ describe('Test cases for /controllers/usb.js', () => {
     request(app)
       .post('/usb/1')
       .send({ source: '/var/www/data/' })
-      .expect(200, { status: 'operation success' }, done);
+      .expect(200, { status: 'request is being processed' }, done);
   });
   it('POST should return 200 OK upon successful request', (done) => {
     this.usbInfoSync.returns(expectedUSBData);
@@ -102,6 +102,6 @@ describe('Test cases for /controllers/usb.js', () => {
     request(app)
       .post('/usb/5')
       .send({ source: '/var/www/data/' })
-      .expect(200, { status: 'operation success' }, done);
+      .expect(200, { status: 'request is being processed' }, done);
   });
 });
