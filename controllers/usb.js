@@ -48,7 +48,7 @@ router.post('/:id', (req, res) => {
             utils.logger.info(`copied ${data.src} to ${data.dst}`);
           }
         });
-        res.json({ status: 'operation success' });
+        res.json({ status: 'request is being processed' });
       })
       .catch(error => res.status(500).json({ reason: error.message }));
   } else {
