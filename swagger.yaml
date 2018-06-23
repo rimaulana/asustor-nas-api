@@ -1,0 +1,392 @@
+openapi: 3.0.0
+# Added by API Auto Mocking Plugin
+servers:
+  - description: SwaggerHub API Auto Mocking
+    url: https://virtserver.swaggerhub.com/rimaulana/asustor-nas-api/1.0.0
+info:
+  description: |
+    API documentation for ASUSTOR NAS API project. You can find
+    out more about the project at
+    [GitHub](https://github.com/rimaulana/asustor-nas-api)
+  version: "1.0.0"
+  title: ASUSTOR NAS API
+  contact:
+    email: rimaulana@outlook.com
+  license:
+    name: Licensed under MIT License
+    url: https://opensource.org/licenses/MIT
+tags:
+  - name: health check
+    description: service health check
+  - name: file
+    description: all actions for file on ASUSTOR NAS
+  - name: folder
+    description: all actions for folder on ASUSTOR NAS
+  - name: usb
+    description: all actions for USB drive(s) on ASUSTOR NAS
+paths:
+  /:
+    get:
+      tags:
+        - health check
+      summary: check service status
+      operationId: getHealthCheck
+      description: |
+        When you need to check whether service is up and running.
+      responses:
+        '200': 
+          description: response when service is up
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HealthCheck'
+    post:
+      tags:
+        - health check
+      summary: check service status
+      operationId: postHealthCheck
+      description: |
+        When you need to check whether service is up and running.
+      responses:
+        '200': 
+          description: response when service is up
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HealthCheck'
+  '/file/{fileName}':
+    get:
+      tags:
+        - file
+      summary:  retrieve file information
+      description: |
+        Getting information on a file on server, such as file path and the size of file in KB
+      parameters: 
+      - in: path
+        name: fileName
+        description: |
+          the full path of the file that we want to query in URL string format
+        required: true
+        schema:
+          type: string
+          format: url-string
+      security: 
+      - header_token: []
+      - query_token: []
+      responses:
+        '200':
+          description: |
+            response when request is accepted and token is valid
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FolderInfo'
+        '401':
+          description: |
+            Unauthorized access to resource
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FailedSecurity'
+        '500':
+          description: |
+            Generic error when something wrong happened on server
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericInternalError'
+  '/folder/':
+    post:
+      tags:
+        - folder
+      summary:  create new folder on the server
+      description: |
+        Send post request to create a new folder on the server
+      requestBody:
+        description: |
+          data that needs to be sent over to server to create new folder
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                foldername:
+                  type: string
+                  example: /var/www/test
+      security: 
+      - header_token: []
+      - query_token: []
+      responses:
+        '200':
+          description: |
+            response when request is accepted and token is valid
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FolderCreated'
+        '401':
+          description: |
+            Unauthorized access to resource
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FailedSecurity'
+        '500':
+          description: |
+            Generic error when something wrong happened on server
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericInternalError'
+  '/folder/{folderName}':
+    get:
+      tags:
+        - folder
+      summary:  retrieve folder information
+      description: |
+        Getting information on a folder on server, such as files it contains, file path and the size of file in KB
+      parameters: 
+      - in: path
+        name: folderName
+        description: |
+          the full path of the folder on server that we want to query in URL string format
+        required: true
+        schema:
+          type: string
+          format: url-string
+      security: 
+      - header_token: []
+      - query_token: []
+      responses:
+        '200':
+          description: |
+            response when request is accepted and token is valid
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FolderInfo'
+        '401':
+          description: |
+            Unauthorized access to resource
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FailedSecurity'
+        '500':
+          description: |
+            Generic error when something wrong happened on server
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericInternalError'
+    post:
+      tags:
+        - folder
+      summary:  create new folder on the server
+      description: |
+        Send post request to create a new folder on the server
+      parameters: 
+      - in: path
+        name: folderName
+        description: |
+          the full path of the folder that we want to create on server in URL string format
+        required: true
+        schema:
+          type: string
+          format: url-string
+      security: 
+      - header_token: []
+      - query_token: []
+      responses:
+        '200':
+          description: |
+            response when request is accepted and token is valid
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FolderCreated'
+        '401':
+          description: |
+            Unauthorized access to resource
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FailedSecurity'
+        '500':
+          description: |
+            Generic error when something wrong happened on server
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericInternalError'
+  /usb/:
+    get:
+      tags:
+        - usb
+      summary: retrieve information on USB drives
+      description: |
+        Retrieve information of USB drives that is mounted on server, the information contains drive mount point, drive ID and free space available on the drive
+      security: 
+      - header_token: []
+      - query_token: []
+      responses:
+        '200':
+          description: |
+            response when request is accepted and token is valid
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UsbInfo'
+        '401':
+          description: |
+            Unauthorized access to resource
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FailedSecurity'
+        '500':
+          description: |
+            Generic error when something wrong happened on server
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericInternalError'
+  '/usb/{driveIndex}':
+    post:
+      tags:
+        - usb
+      summary: copy file to USB
+      description: |
+        Copy defined file / folder into the root path / mount point of USB drive.
+      parameters:
+      - in: path
+        name: driveIndex
+        description: |
+          the index of the USB drive, you can get this information from get usb path
+        required: true
+        schema:
+          type: string
+      requestBody:
+        description: |
+          json payload that need to be send over to the server
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                source:
+                  type: string
+                  format: uri
+                  example: /home/rio/backup
+      security: 
+      - header_token: []
+      - query_token: []
+      responses:
+        '200':
+          description: |
+            response when request is accepted and token is valid
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    example: request is being processed
+        '401':
+          description: |
+            Unauthorized access to resource
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FailedSecurity'
+        '500':
+          description: |
+            Generic error when something wrong happened on server
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericInternalError'
+components:
+  schemas:
+    HealthCheck:
+      type: object
+      properties:
+        process:
+          type: string
+          example: Health check
+        version:
+          type: string
+          example: 1.0.0
+        ok:
+          type: boolean
+          example: true
+    FailedSecurity:
+      type: object
+      properties:
+        reason:
+          type: string
+          example: access token required / invalid
+    FolderInfo:
+      type: object
+      properties:
+        totalSize:
+          type: integer
+          example: 2000
+        files:
+          type: array
+          items:
+            $ref: '#/components/schemas/File'
+    File:
+      type: object
+      properties:
+        path:
+          type: string
+          example: /var/www/riospace.web.id/index.js
+        size:
+          type: integer
+          example: 2000
+    GenericInternalError:
+      type: object
+      properties:
+        reason:
+          type: string
+          example: error in accessing file / folder not found
+    FolderCreated:
+      type: object
+      properties:
+        status:
+          type: string
+          example: folder /var/www/test created
+    Usb:
+      type: object
+      properties:
+        name:
+          type: string
+          format: uri
+          example: /share/USB1
+        size:
+          type: integer
+          example: 180000
+        index:
+          type: integer
+          example: 1
+    UsbInfo:
+      type: object
+      properties:
+        totalAvailableSpace:
+          type: integer
+          example: 180000
+        drives:
+          type: array
+          items:
+            $ref: '#/components/schemas/Usb'
+  securitySchemes:
+    header_token:
+      type: apiKey
+      name: x-access-token
+      in: header
+    query_token:
+      type: apiKey
+      name: token
+      in: query
