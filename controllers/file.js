@@ -5,9 +5,7 @@ const asustor = require('@rimaulana/asustor-node');
 const router = express.Router();
 
 const getFile = (req, res) => {
-  asustor.fileInfo(req.params.filename, (error, data) => {
-    utils.genericReply(res, error, data);
-  });
+  utils.getFunction(res, asustor.fileInfo, req.params.filename);
 };
 
 router.get('/:filename', getFile);

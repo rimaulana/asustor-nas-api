@@ -18,9 +18,7 @@ const createFolder = (req, res) => {
 };
 
 const getFolder = (req, res) => {
-  asustor.folderInfo(req.params.foldername, (error, data) => {
-    utils.genericReply(res, error, data);
-  });
+  utils.getFunction(res, asustor.folderInfo, req.params.foldername);
 };
 
 router.get('/:foldername', getFolder);

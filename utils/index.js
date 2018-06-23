@@ -26,6 +26,12 @@ const genericReply = (res, error, data, code = 500) => {
   }
 };
 
+const getFunction = (res, fn, param) => {
+  fn(param, (error, data) => {
+    genericReply(res, error, data);
+  });
+};
+
 module.exports = {
-  logger, cleanIPAddress, cleanSourcePath, getFileName, genericReply, mkdirp,
+  logger, cleanIPAddress, cleanSourcePath, getFileName, genericReply, mkdirp, getFunction,
 };
