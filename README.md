@@ -53,7 +53,7 @@ This array is a collections of allowed API keys used to authenticate a request.
 ### server_port (**optional**)
 By default application will use port 3000 unless you say otherwise on this section. All optional settings doesn't need to be declared when it is not used
 ### slack_webhook (**optional**)
-Integration with slack where application loggin will be sent to slack. All optional settings doesn't need to be declared when it is not used
+Integration with slack where application loggin will be sent to slack. More information regarding slack incoming webhook can be read over [here](https://api.slack.com/incoming-webhooks). All optional settings doesn't need to be declared when it is not used
 
 ## Running the service
 
