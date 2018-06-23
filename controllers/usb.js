@@ -13,29 +13,25 @@ const getUsb = (req, res) => {
 
 router.get('/', getUsb);
 
-const postHandler = async (req) => {
+const postHandler = req => new Promise((resolve, reject) => {
   let drive = null;
-  try {
-    const data = asustor.usbInfoSync();
-    data.drives.forEach((drv) => {
-      if (parseInt(req.params.id, 10) === drv.index) {
-        drive = drv;
-      }
-    });
-    if (drive === null) {
-      throw new Error("couldn't find drive you specified");
+  const data = asustor.usbInfoSync();
+  data.drives.forEach((drv) => {
+    if (parseInt(req.params.id, 10) === drv.index) {
+      drive = drv;
     }
-    const src = utils.cleanSourcePath(req.body.source);
-    const dst = `${drive.name}/${utils.getFileName(src)}`;
-    const fileInfo = asustor.fileInfoSync(src);
-    if (fileInfo.totalSize > drive.size) {
-      throw new Error("destination drive doesn't have enough space");
-    }
-    return { src, dst };
-  } catch (error) {
-    throw error;
+  });
+  if (drive === null) {
+    reject(new Error("couldn't find drive you specified"));
   }
-};
+  const src = utils.cleanSourcePath(req.body.source);
+  const dst = `${drive.name}/${utils.getFileName(src)}`;
+  const fileInfo = asustor.fileInfoSync(src);
+  if (fileInfo.totalSize > drive.size) {
+    reject(new Error("destination drive doesn't have enough space"));
+  }
+  resolve({ src, dst });
+});
 
 router.post('/:id', (req, res) => {
   if (req.body.source) {
