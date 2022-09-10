@@ -25,7 +25,7 @@ To install this application, the following requirements needs to be met
 * npm ^3.10.8
 * internet connection
 
-once all the requirements are me, you can clone this repository using the following command
+once all the requirements are met, you can clone this repository using the following command
 ```bash
 git clone https://github.com/rimaulana/asustor-nas-api.git
 ```
